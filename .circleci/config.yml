@@ -25,9 +25,9 @@ jobs:
     docker:
       - image: alpine:latest
     steps:
-      - run: echo "text to output here" > /root/project/output.txt
+      - run: echo "text to output here" > ~/output.txt
       - persist_to_workspace:
-          root: /root/project/
+          root: ~/
           paths:
             - output.txt
   print_output_file:
@@ -35,8 +35,8 @@ jobs:
       - image: alpine:latest
     steps:
       - attach_workspace:
-          at: /root/project/
-      - run: ls /root/project
+          at: ~/
+      - run: cat ~/output.txt
 
 workflows:
   # Name the workflow "welcome"
