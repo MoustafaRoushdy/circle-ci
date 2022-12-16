@@ -21,13 +21,32 @@ jobs:
       - image: alpine:latest
     steps:
       - run: echo $name
+  save_hello_world_output:
+    docker:
+      - image: alpine:latest
+    steps:
+      - run: echo "text to output here" > output.txt
+      - persist_to_workspace:
+          root: /
+          paths:
+            - output.txt
+  print_output_file:
+    docker:
+      - image: alpine:latest
+    steps:
+      - attach_workspace:
+          at: /
+      - run: cat output.txt
+
 workflows:
   # Name the workflow "welcome"
   welcome:
     # Run the welcome/run job in its own container
     jobs:
-      - welcome/run
-      - print_hello
-      - print_world:
-          requires: [print_hello]
-      - print_env_var
+      # - welcome/run
+      # - print_hello
+      # - print_world:
+      #     requires: [print_hello]
+      # - print_env_var
+      - save_hello_world_output
+      - print_output_file
