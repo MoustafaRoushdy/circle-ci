@@ -36,7 +36,7 @@ jobs:
     steps:
       - attach_workspace:
           at: /root/project
-      - run: cat /output.txt
+      - run: cat output.txt
 
 workflows:
   # Name the workflow "welcome"
